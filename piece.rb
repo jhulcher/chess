@@ -28,7 +28,4 @@ class Piece
 
     true
   end
-
-
-
 end

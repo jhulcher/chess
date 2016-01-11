@@ -1,14 +1,22 @@
 require_relative "display"
 require_relative "piece"
 require_relative "sliders"
+require_relative "queen"
+require_relative "king"
+require_relative "bishop"
 require_relative "knight"
+require_relative "rook"
+require_relative "pawn"
+
 require "byebug"
 
 class Board
   attr_reader :grid
+  attr_accessor :current_player
 
   def initialize(grid = Array.new(8) { Array.new(8) })
     @grid = grid
+    @current_player = "Red"
     populate
   end
 
@@ -26,9 +34,11 @@ class Board
   end
 
   def in_check?(color, temp_board_self)
+
     king_pos = temp_board_self.grid.flatten.find do |piece|
       piece.is_a?(King) && piece.color == color
     end.current_pos
+
     temp_board_self.grid.flatten.each do |piece|
       next if piece.nil?
       return true if piece.color != color && piece.valid_move!(king_pos)
@@ -37,6 +47,7 @@ class Board
   end
 
   def populate
+
     [1, 6].each do |row|
       @grid[row].each_index do |space|
         if row == 1
@@ -46,6 +57,7 @@ class Board
         end
       end
     end
+
     [0, 7].each do |row|
       @grid[row].each_index do |space|
         (row == 0) ? color = :red : color = :black
@@ -75,18 +87,18 @@ class Board
     @grid[pos[0]][pos[1]]
   end
 
-
   def render
     @grid.each do |row|
       row.each do |piece|
         if piece.nil?
-          print "[ ]"
+          print " [ ] "
         else
           print "[ #{piece} ]"
         end
       end
       puts
     end
+    puts
   end
 
   def move(start, end_pos)
@@ -94,9 +106,15 @@ class Board
       raise "No piece at this location" if @grid[start[0]][start[1]].nil?
       raise "Cannot Move to Same Position" if start == end_pos
       raise "Invalid move for class!" unless @grid[start[0]][start[1]].valid_move?(end_pos)
+      raise "Not your turn" if @grid[start[0]][start[1]].color.to_s != @current_player.downcase
       @grid[end_pos[0]][end_pos[1]] = @grid[start[0]][start[1]]
       @grid[start[0]][start[1]] = nil
       @grid[end_pos[0]][end_pos[1]].current_pos = end_pos
+      if @current_player == "Red"
+        @current_player = "Black"
+      else
+        @current_player = "Red"
+      end
     rescue Exception => e
       puts e.message
     end
@@ -104,19 +122,9 @@ class Board
 
   def in_bounds?(pos)
     pos.each do |i|
-        return false if !(0..7).to_a.include?(i)
+      return false if !(0..7).to_a.include?(i)
     end
     true
   end
 
 end
-
-
-
-
-
-
-
-
-
-#

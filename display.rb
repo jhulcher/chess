@@ -6,6 +6,7 @@ class Display
   include Cursorable
 
   attr_reader :board
+
   def initialize(board = Board.new)
     @board = board
     @cursor_pos = [0, 0]
@@ -16,13 +17,14 @@ class Display
     @board.grid.each_with_index do |row, i|
       row.each_with_index do |piece, j|
         if piece.nil?
-          print "   ".colorize(colors_for(i, j))
+          print "    ".colorize(colors_for(i, j))
         else
           print piece.to_s.colorize(colors_for(i, j))
         end
       end
       puts
     end
+    puts "#{board.current_player} Player turn"
     nil
   end
 
@@ -38,9 +40,8 @@ class Display
     end
     { background: bg }
   end
+
 end
-
-
 
 if __FILE__ == $PROGRAM_NAME
   d = Display.new

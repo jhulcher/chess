@@ -13,7 +13,7 @@ class Piece
   end
 
   def to_s
-    " #{@type} ".colorize(@color)
+    "#{@type}".colorize(@color)
   end
 
   def valid_move?(end_pos)
@@ -28,5 +28,5 @@ class Piece
     return false unless pos_move?(end_pos)
     true
   end
-  
+
 end

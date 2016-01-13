@@ -34,7 +34,6 @@ class Board
   end
 
   def in_check?(color, temp_board_self)
-
     king_pos = temp_board_self.grid.flatten.find do |piece|
       piece.is_a?(King) && piece.color == color
     end.current_pos
@@ -43,6 +42,7 @@ class Board
       next if piece.nil?
       return true if piece.color != color && piece.valid_move!(king_pos)
     end
+
     false
   end
 
@@ -91,9 +91,9 @@ class Board
     @grid.each do |row|
       row.each do |piece|
         if piece.nil?
-          print " [ ] "
+          print ""
         else
-          print "[ #{piece} ]"
+          print "#{piece}"
         end
       end
       puts

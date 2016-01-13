@@ -17,7 +17,7 @@ class Display
     @board.grid.each_with_index do |row, i|
       row.each_with_index do |piece, j|
         if piece.nil?
-          print "    ".colorize(colors_for(i, j))
+          print "  ".colorize(colors_for(i, j))
         else
           print piece.to_s.colorize(colors_for(i, j))
         end

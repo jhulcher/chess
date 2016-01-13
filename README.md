@@ -1,5 +1,9 @@
 # Chess
 
+
+<img src="img/chess.gif" />
+
+
 ## A 2d console game built with Ruby
 
 - [ ] Make sure Ruby is installed on your system.

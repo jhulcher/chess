@@ -24,7 +24,7 @@ class Display
       end
       puts
     end
-    puts "#{board.current_player} Player turn"
+    puts "#{board.current_player} Player's turn"
     nil
   end
 
